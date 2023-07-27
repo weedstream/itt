@@ -1,0 +1,28 @@
+<!-- Tambahkan ID pada tautan "Ambil Antrian" -->
+<a href="<?= site_url('ambil/saveAntrian/' . $data->loket_id . '/' .$antri); ?>" id="ambil-antrian-link" class="small-box-footer">
+    Ambil Antrian <i class="fa fa-arrow-circle-right"></i>
+</a>
+
+<script type="text/javascript">
+    // Pasang penangan acara klik pada tautan
+    document.getElementById('ambil-antrian-link').addEventListener('click', function(event) {
+        event.preventDefault(); // Mencegah perilaku tautan default
+
+        var link = this.href;
+
+        // Kirim permintaan AJAX ke metode controller
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', link, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+
+                if (response.success) {
+                    // Jika permintaan berhasil, mulai dialog pencetakan
+                    window.print();
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>
